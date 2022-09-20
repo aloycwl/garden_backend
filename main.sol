@@ -2,11 +2,16 @@
 To be deployed in Goerli testnet for Aave testing
 LendingPool (mainnet): 0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9
 */
-
 pragma solidity>0.8.0;//SPDX-License-Identifier:None
 
+interface ILendingPool {
+    function deposit(address asset,uint256 amount,address onBehalfOf,uint16 referralCode) external;
+}
+
 contract Main{
+    ILendingPool private ilp;
     constructor(){
+        ilp=ILendingPool(0x4bd5643ac6f66a5237E18bfA7d47cF22f1c9F210);
 
     }
     function swap()external{
