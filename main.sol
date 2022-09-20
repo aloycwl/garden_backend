@@ -1,5 +1,6 @@
 /*
 To be deployed in Goerli testnet for Aave testing
+LendingPool (mainnet): 0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9
 */
 
 pragma solidity>0.8.0;//SPDX-License-Identifier:None
