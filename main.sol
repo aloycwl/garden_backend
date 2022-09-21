@@ -1,7 +1,7 @@
 /*
 To be deployed in Goerli testnet for Aave testing
-LendingPool (mainnet): 0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9
-REDO TO WETH Gateway
+WETH Gateway (mainnet): 0xEFFC18fC3b7eb8E676dac549E0c693ad50D1Ce31
+LendingPool (mainnet): 0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9
 */
 pragma solidity>0.8.0;//SPDX-License-Identifier:None
 
@@ -14,7 +14,7 @@ contract Main{
     ILendingPool private ilp;
 
     constructor(){
-        ilp=ILendingPool(0x4bd5643ac6f66a5237E18bfA7d47cF22f1c9F210);
+        ilp=ILendingPool(0x3bd3a20Ac9Ff1dda1D99C0dFCE6D65C4960B3627);
 
     }
     function swap(uint amt)external payable{
@@ -25,6 +25,7 @@ contract Main{
         /*
         Put into aave and get stETH
         */
+        //0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9
         ilp.deposit(address(0),amt,address(this),0);
 
         /*
