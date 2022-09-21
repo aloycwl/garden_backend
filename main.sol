@@ -10,25 +10,36 @@ interface IWETHGateway {
     function depositETH(uint,address,address,uint)external;
 }
 
+interface ICurveSwap{
+    //ether, index value of coin to send, to receive, amt to exchange, min amt to recv
+    function exchange(uint,int128,int128,uint,uint)external;
+}
+
 contract Main{
     IWETHGateway private iwg;
+    ICurveSwap private ics;
 
-    constructor(){
-        iwg=IWETHGateway(0x3bd3a20Ac9Ff1dda1D99C0dFCE6D65C4960B3627);
+    constructor()payable{
+        iwg=IWETHGateway(0x3bd3a20Ac9Ff1dda1D99C0dFCE6D65C4960B3627); //Goerli
+        ics=ICurveSwap(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022); //No testnet
 
     }
-    function swap(uint amt)external payable{
+    function swap()external payable{
         //Put into aave and get aToken
+        //....Get amount to be exchanged first
+        uint amt=msg.value;
+        uint targetStEth=0;
         iwg.depositETH(amt,0x4bd5643ac6f66a5237E18bfA7d47cF22f1c9F210,address(this),0);
 
-        /*
-        0xdc24316b9ae028f1497c275eb9192a3ea0f67022
-        Exchange from curve.fi and get ETH
-        */
+        //Exchange from curve.fi and get ETH
+        //Get index number first
+        (int128 stEthIndex,int128 ethIndex)=(0,0);
+        //Get expected return
+        uint minAmt=0;
+        ics.exchange(0,stEthIndex,ethIndex,targetStEth,minAmt);
 
-        /*
-        Transfer back to msg.sender the exchanged ETH
-        Deduct admin fee
-        */
+        //Transfer back to msg.sender the exchanged ETH & Deduct admin fee
+        payable(address(this)).transfer(minAmt*9999/10000);
+        
     }
 }
